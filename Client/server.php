@@ -12,9 +12,18 @@ $server = stream_socket_server("{$proto}://{$server_ip}:{$port}", $errno, $ErrSt
 while ($client = stream_socket_accept($server, -1)){
     echo "New Client\n";
     $responce_client = stream_get_line($client,1000,"\n");
-    echo "Client say".$responce_client."\n";
-    fwrite($client, "Hello Client\n");
+//    echo "Client say".$responce_client."\n";
+//    fwrite($client, "Hello Client\n");
+    switch($responce_client){
+        case "hello":
+            fwrite($client, "Hello Client\n");
+            break;
+        case "how":
+            $user = stream_get_line($client,1000,"\n");
+            fwrite($client, "User {$user} is OK\n");
+            break;
 
+    }
 
 }
 
